@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <div>
-        <input type="file" accept="image/*" capture="camera"/>
+        <input type="file" accept="image/*"/>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
