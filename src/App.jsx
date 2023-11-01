@@ -18,10 +18,20 @@ function App() {
           halfSample: true
       },
       decoder: {
-        readers: [{
-          format: "ean_reader",
-          config: {}
-        }] // List of active readers
+        readers: [
+          {
+            format: "ean_reader",
+            config: {}
+          },
+          {
+            format: "code_128_reader",
+            config: {}
+          },
+          {
+            format: "i2of5_reader",
+            config: {}
+          }
+        ] // List of active readers
       },
       locate: true, // try to locate the barcode in the image
       src: src // or 'data:image/jpg;base64,' + data
@@ -36,7 +46,7 @@ function App() {
 
     Quagga.decodeSingle(config, (result) => {
       if(result.codeResult) {
-        alert("result:" + result.codeResult.code.toString())
+        alert("result:" + result.codeResult.code)
         console.log("result:", result.codeResult.code)
       } else {
         alert("not detected")
