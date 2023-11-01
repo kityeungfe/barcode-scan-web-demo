@@ -8,14 +8,32 @@ function App() {
   const [count, setCount] = useState(0)
 
   const decode = (src) => {
-    var self = this,
-    config = {
+    console.log('src=', src);
+    let config = {
+      nputStream: {
+        size: 800,
+        singleChannel: false
+      },
+      locator: {
+          patchSize: "medium",
+          halfSample: true
+      },
       decoder: {
-          readers: ["code_128_reader", "ean_reader", "i2of5_reader"] // List of active readers
+        readers: [{
+          format: "ean_reader",
+          config: {}
+        }] // List of active readers
       },
       locate: true, // try to locate the barcode in the image
       src: src // or 'data:image/jpg;base64,' + data
     }
+
+    Quagga.onProcessed((result) => {
+      console.log("onProcessed...")
+      let drawingCtx = Quagga.canvas.ctx.overlay,
+          drawingCanvas = Quagga.canvas.dom.overlay,
+          area;
+    });
 
     Quagga.decodeSingle(config, (result) => {
       if(result.codeResult) {
@@ -34,7 +52,7 @@ function App() {
         <input 
           type="file" 
           accept="image/*"
-          onChange={(event) => {
+          onChange={(e) => {
             if (e.target.files && e.target.files.length) {
               decode(URL.createObjectURL(e.target.files[0]));
           }
