@@ -1,15 +1,45 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import Quagga from 'quagga'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  const decode = (src) => {
+    var self = this,
+    config = {
+      decoder: {
+          readers: ["code_128_reader", "ean_reader", "i2of5_reader"] // List of active readers
+      },
+      locate: true, // try to locate the barcode in the image
+      src: src // or 'data:image/jpg;base64,' + data
+    }
+
+    Quagga.decodeSingle(config, (result) => {
+      if(result.codeResult) {
+        alert("result:", result.codeResult.code)
+        console.log("result:", result.codeResult.code)
+      } else {
+        alert("not detected")
+        console.log("not detected")
+      }
+    });
+  }
+
   return (
     <>
       <div>
-        <input type="file" accept="image/*"/>
+        <input 
+          type="file" 
+          accept="image/*"
+          onChange={(event) => {
+            if (e.target.files && e.target.files.length) {
+              decode(URL.createObjectURL(e.target.files[0]));
+          }
+          }}
+        />
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
