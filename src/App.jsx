@@ -8,7 +8,6 @@ function App() {
   const [count, setCount] = useState(0)
 
   const decode = (src) => {
-    console.log('src=', src);
     let config = {
       nputStream: {
         size: 800,
@@ -37,7 +36,7 @@ function App() {
 
     Quagga.decodeSingle(config, (result) => {
       if(result.codeResult) {
-        alert("result:", result.codeResult.code)
+        alert("result:" + result.codeResult.code.toString())
         console.log("result:", result.codeResult.code)
       } else {
         alert("not detected")
@@ -52,6 +51,7 @@ function App() {
         <input 
           type="file" 
           accept="image/*"
+          capture="camera"
           onChange={(e) => {
             if (e.target.files && e.target.files.length) {
               decode(URL.createObjectURL(e.target.files[0]));
