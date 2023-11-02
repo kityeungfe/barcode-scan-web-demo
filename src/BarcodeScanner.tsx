@@ -29,10 +29,12 @@ export const BarcodeScanner: React.FC<{}> = () => {
       console.error(error);
     },
     constraints: {
-      video: {
-        width: 500,
-        height: 100
-      }
+      audio: false,
+      video: { 
+        facingMode: "environment",
+        width: 180,
+        height: 320,
+      },
     }
   });
 
